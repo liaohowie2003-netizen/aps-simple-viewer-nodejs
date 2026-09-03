@@ -14,7 +14,15 @@ async function setupModelSelection(viewer, selectedUrn) {
         if (!resp.ok) {
             throw new Error(await resp.text());
         }
-        const models = await resp.json();
+        const allModels = await resp.json();
+
+const allowedModels = [
+    'MOD-001-PC-001.dwg'
+];
+
+const models = allModels.filter(model =>
+    allowedModels.includes(model.name)
+);
         dropdown.innerHTML = models.map(model => `<option value=${model.urn} ${model.urn === selectedUrn ? 'selected' : ''}>${model.name}</option>`).join('\n');
         dropdown.onchange = () => onModelSelected(viewer, dropdown.value);
         if (dropdown.value) {
