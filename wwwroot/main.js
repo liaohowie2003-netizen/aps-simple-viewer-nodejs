@@ -20,11 +20,15 @@ const allowedModels = [
     'MOD-001-PC-001.dwg',
     'MPS-001-MOD-001.dwg'
 ];
+const displayNames = {
+    'MOD-001-PC-001.dwg': 'Brownfield Heat Exchanger',
+    'MPS-001-MOD-001.dwg': 'Modular Pump Skid'
+};
 
 const models = allModels.filter(model =>
     allowedModels.includes(model.name)
 );
-        dropdown.innerHTML = models.map(model => `<option value=${model.urn} ${model.urn === selectedUrn ? 'selected' : ''}>${model.name}</option>`).join('\n');
+        dropdown.innerHTML = models.map(model => `<option value=${model.urn} ${model.urn === selectedUrn ? 'selected' : ''}>${displayNames[model.name] || model.name}</option>`).join('\n');
         dropdown.onchange = () => onModelSelected(viewer, dropdown.value);
         if (dropdown.value) {
             onModelSelected(viewer, dropdown.value);
