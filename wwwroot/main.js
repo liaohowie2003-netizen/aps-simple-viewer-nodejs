@@ -18,7 +18,7 @@ async function setupModelSelection(viewer, selectedUrn) {
 
 const allowedModels = [
     'MOD-001-PC-001.dwg',
-    'PORT-001-MOD-001.dwg'
+    'MPS-001-MOD-001.dwg'
 ];
 
 const models = allModels.filter(model =>
