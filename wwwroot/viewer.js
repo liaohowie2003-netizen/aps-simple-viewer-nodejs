@@ -30,13 +30,34 @@ export function initViewer(container) {
 
 export function loadModel(viewer, urn) {
     return new Promise(function (resolve, reject) {
+
         function onDocumentLoadSuccess(doc) {
-            resolve(viewer.loadDocumentNode(doc, doc.getRoot().getDefaultGeometry()));
+            const root = doc.getRoot();
+
+            // Find available 3D geometry
+            const views3D = root.search({
+                type: 'geometry',
+                role: '3d'
+            });
+
+            // Open 3D first, otherwise fall back to Autodesk's default view
+            const viewable = views3D.length > 0
+                ? views3D[0]
+                : root.getDefaultGeometry();
+
+            resolve(viewer.loadDocumentNode(doc, viewable));
         }
+
         function onDocumentLoadFailure(code, message, errors) {
             reject({ code, message, errors });
         }
+
         viewer.setLightPreset(0);
-        Autodesk.Viewing.Document.load('urn:' + urn, onDocumentLoadSuccess, onDocumentLoadFailure);
+
+        Autodesk.Viewing.Document.load(
+            'urn:' + urn,
+            onDocumentLoadSuccess,
+            onDocumentLoadFailure
+        );
     });
 }
