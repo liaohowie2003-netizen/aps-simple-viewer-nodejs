@@ -112,23 +112,22 @@ await loadModel(viewer, urn);
 
 const params = new URLSearchParams(window.location.search);
 const requestedModel = params.get('model');
-
-if (requestedModel === 'skid') {
-   viewer.setViewFromArray([
-    280.07511607188667,
-    -77.51245956210353,
-    78.0436546447516,
-    -19.380388233981577,
-    80.31535139616194,
-    9.78092354868145,
-    0,
-    0,
-    1,
-    0.714064914992272,
-    0.9272952180016122,
-    168.48620900236406,
-    1
-]);
+   if (requestedModel === 'skid') {
+    viewer.setViewFromArray([
+        -67.49595913630355,
+        -72.1583126367594,
+        102.59065115081873,
+        -19.380388233981577,
+        80.31535139616194,
+        9.78092354868145,
+        0,
+        0,
+        1,
+        0.21360759493670886,
+        0.9272952180016122,
+        168.48620900236384,
+        1
+    ]);
 }
 
 break;
