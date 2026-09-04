@@ -2,10 +2,15 @@ import { initViewer, loadModel } from './viewer.js';
 
 initViewer(document.getElementById('preview')).then(viewer => {
     const urn = window.location.hash?.substring(1);
-    window.viewer = viewer;
 
     setupModelSelection(viewer, urn);
     setupModelUpload(viewer);
+    const params = new URLSearchParams(window.location.search);
+const isAdmin = params.get('admin') === 'true';
+
+if (!isAdmin) {
+    document.getElementById('upload').style.display = 'none';
+}
 });
 
 async function setupModelSelection(viewer, selectedUrn) {
