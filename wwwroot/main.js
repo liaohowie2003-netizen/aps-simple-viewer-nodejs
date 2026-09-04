@@ -129,7 +129,7 @@ if (requestedModel === 'skid') {
         168.486209002364,
         1
     ]);
-    viewer.navigation.panRelative(0.12, 0);
+    viewer.navigation.panRelative(3, 0);
 }
 
 break;
