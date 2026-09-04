@@ -114,7 +114,7 @@ const params = new URLSearchParams(window.location.search);
 const requestedModel = params.get('model');
    if (requestedModel === 'skid') {
     viewer.setViewFromArray([
-        33.19810263089366,
+        105.19810263089366,
         -79.08073397963658,
         80.50794581707078,
         -19.380388233981577,
