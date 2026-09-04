@@ -3,7 +3,7 @@ import { initViewer, loadModel } from './viewer.js';
 initViewer(document.getElementById('preview')).then(viewer => {
     const urn = window.location.hash?.substring(1);
     window.viewer = viewer;
-    
+
     setupModelSelection(viewer, urn);
     setupModelUpload(viewer);
 });
@@ -106,9 +106,32 @@ async function onModelSelected(viewer, urn) {
                 showNotification(`Translation failed. <ul>${status.messages.map(msg => `<li>${JSON.stringify(msg)}</li>`).join('')}</ul>`);
                 break;
             default:
-                clearNotification();
-                loadModel(viewer, urn);
-                break; 
+               clearNotification();
+
+await loadModel(viewer, urn);
+
+const params = new URLSearchParams(window.location.search);
+const requestedModel = params.get('model');
+
+if (requestedModel === 'skid') {
+    viewer.setViewFromArray([
+        -26.765268824025583,
+        -90.55605020831807,
+        95.4851020844963,
+        -19.380388233981577,
+        80.31535139616194,
+        9.78092354868145,
+        0,
+        0,
+        1,
+        1.517774343122102,
+        0.9272952180016122,
+        168.486209002364,
+        1
+    ]);
+}
+
+break;
         }
     } catch (err) {
         alert('Could not load model. See the console for more details.');
