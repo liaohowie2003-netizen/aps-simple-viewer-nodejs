@@ -16,18 +16,24 @@ async function setupModelSelection(viewer, selectedUrn) {
         }
         const allModels = await resp.json();
 
-const allowedModels = [
-    'MOD-001-PC-001.dwg',
-    'MPS-001-MOD-001.dwg'
-];
-const displayNames = {
-    'MOD-001-PC-001.dwg': 'Brownfield Heat Exchanger',
-    'MPS-001-MOD-001.dwg': 'Modular Pump Skid'
+const portfolioModels = {
+    exchanger: 'MOD-001-PC-001.dwg',
+    skid: 'MPS-001-MOD-001.dwg'
 };
 
-const models = allModels.filter(model =>
-    allowedModels.includes(model.name)
-);
+// Read the model requested in the URL
+const params = new URLSearchParams(window.location.search);
+const requestedModel = params.get('model');
+
+const targetFile = portfolioModels[requestedModel];
+
+// If ?model= is specified, only load that model
+// Otherwise show both portfolio models
+const models = targetFile
+    ? allModels.filter(model => model.name === targetFile)
+    : allModels.filter(model =>
+        Object.values(portfolioModels).includes(model.name)
+    );
         dropdown.innerHTML = models.map(model => `<option value=${model.urn} ${model.urn === selectedUrn ? 'selected' : ''}>${displayNames[model.name] || model.name}</option>`).join('\n');
         dropdown.onchange = () => onModelSelected(viewer, dropdown.value);
         if (dropdown.value) {
