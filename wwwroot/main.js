@@ -34,7 +34,7 @@ const models = targetFile
     : allModels.filter(model =>
         Object.values(portfolioModels).includes(model.name)
     );
-        dropdown.innerHTML = models.map(model => `<option value=${model.urn} ${model.urn === selectedUrn ? 'selected' : ''}>${displayNames[model.name] || model.name}</option>`).join('\n');
+        dropdown.innerHTML = models.map(model => `<option value="${model.urn}" ${model.urn === selectedUrn ? 'selected' : ''}>${model.name}</option>`).join('\n');
         dropdown.onchange = () => onModelSelected(viewer, dropdown.value);
         if (dropdown.value) {
             onModelSelected(viewer, dropdown.value);
