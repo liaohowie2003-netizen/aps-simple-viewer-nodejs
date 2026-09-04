@@ -115,7 +115,7 @@ const requestedModel = params.get('model');
 
 if (requestedModel === 'skid') {
    viewer.setViewFromArray([
-    80.07511607188667,
+    200.07511607188667,
     -77.51245956210353,
     78.0436546447516,
     -19.380388233981577,
