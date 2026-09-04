@@ -1,4 +1,5 @@
 import { initViewer, loadModel } from './viewer.js';
+window.viewer = viewer;
 
 initViewer(document.getElementById('preview')).then(viewer => {
     const urn = window.location.hash?.substring(1);
