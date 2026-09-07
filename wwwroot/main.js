@@ -26,7 +26,7 @@ async function setupModelSelection(viewer, selectedUrn) {
 const portfolioModels = {
     exchanger: 'MOD-001-PC-001.dwg',
     skid: 'MPS-001-MOD-001.dwg',
-    transmission: 'Trans1.zip'
+    transmission: 'Trans01.zip'
 };
 
 // Read the model requested in the URL
