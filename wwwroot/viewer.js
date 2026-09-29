@@ -45,7 +45,10 @@ export function loadModel(viewer, urn) {
                 ? views3D[0]
                 : root.getDefaultGeometry();
 
-            resolve(viewer.loadDocumentNode(doc, viewable));
+            viewer.loadDocumentNode(doc, viewable).then((model) => {
+    makeEnvelopeTransparent(viewer, model);
+    resolve(model);
+});
         }
 
         function onDocumentLoadFailure(code, message, errors) {
@@ -60,4 +63,52 @@ export function loadModel(viewer, urn) {
             onDocumentLoadFailure
         );
     });
+}
+
+function makeEnvelopeTransparent(viewer, model) {
+    const tree = model.getInstanceTree();
+    const rootId = tree.getRootId();
+    const dbIds = [];
+
+    function collect(dbId) {
+        let hasChildren = false;
+
+        tree.enumNodeChildren(dbId, (childId) => {
+            hasChildren = true;
+            collect(childId);
+        });
+
+        if (!hasChildren) {
+            dbIds.push(dbId);
+        }
+    }
+
+    collect(rootId);
+
+    model.getBulkProperties(
+        dbIds,
+        {
+            propFilter: ['Category']
+        },
+        (results) => {
+            const transparentColor = new THREE.Vector4(1, 1, 1, 0.18);
+
+            for (const item of results) {
+                const categoryProp = item.properties?.find(
+                    p => p.displayName === 'Category'
+                );
+
+                const category = categoryProp?.displayValue || '';
+
+                if (
+                    category.includes('Walls') ||
+                    category.includes('Roofs')
+                ) {
+                    model.setThemingColor(item.dbId, transparentColor);
+                }
+            }
+
+            viewer.impl.invalidate(true);
+        }
+    );
 }
