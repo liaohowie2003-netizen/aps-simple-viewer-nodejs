@@ -27,7 +27,7 @@ const portfolioModels = {
     exchanger: 'MOD-001-PC-001.dwg',
     skid: 'MPS-001-MOD-001.dwg',
     transmission: 'Trans01.zip',
-    hvac: 'REC-001_Rec_Centre_Mechanical.rvt'
+    hvac: 'REC-001_Rec_Centre_Mechanical1.rvt'
 };
 
 // Read the model requested in the URL
